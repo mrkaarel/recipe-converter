@@ -34,6 +34,8 @@
 			right: 1em;
 
 			cursor: pointer;
+			-webkit-appearance: none;
+			
 			font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
 			text-transform: uppercase;
 
