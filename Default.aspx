@@ -3,10 +3,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/buttons-min.css">
+	<meta name="description" content="A simple tool to convert imperial units in your recipe to metric ones." />
 	<title>Recipe converter</title>
 	<style>
-		* { box-sizing: border-box; }
+		* { 
+			box-sizing: border-box; 
+		}
 		html, body {
 			margin: 0; padding: 0;
 			width: 100%; height: 100%;
@@ -31,18 +33,26 @@
 			bottom: 1em;
 			right: 1em;
 
-			color: #fff;
+			cursor: pointer;
+			font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
 			text-transform: uppercase;
-			font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-			background: rgb(66, 184, 221);
+
+			border: none;
+			border-radius: 2px;
+			background-color: rgba(66, 133, 244, 1);
+			color: #fff;
+			padding: 0.8em 1em;
 		}
+			input[type=submit]:hover {
+				background-color: rgba(66, 133, 244, 0.9);
+			}
 	</style>
 	<meta name="viewport" content="width=device-width" />
 </head>
 <body>
-	<form id="form1" runat="server">
+	<form runat="server">
 		<asp:TextBox ID="txtRecipe" TextMode="MultiLine" placeholder="paste your recipe here" runat="server" />
-		<asp:Button ID="btnConvert" Text="Convert" OnClick="btnConvert_Click" CssClass="pure-button" runat="server" />
+		<asp:Button ID="btnConvert" Text="Convert" OnClick="btnConvert_Click" runat="server" />
 	</form>
 </body>
 </html>
