@@ -3,6 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/buttons-min.css">
 	<title>Recipe converter</title>
 	<style>
 		* { box-sizing: border-box; }
@@ -29,14 +30,19 @@
 			position: absolute;
 			bottom: 1em;
 			right: 1em;
+
+			color: #fff;
+			text-transform: uppercase;
+			font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+			background: rgb(66, 184, 221);
 		}
 	</style>
 	<meta name="viewport" content="width=device-width" />
 </head>
 <body>
 	<form id="form1" runat="server">
-		<asp:TextBox ID="txtRecipe" TextMode="MultiLine" placeholder="paste your recipe here and press Convert" runat="server" />
-		<asp:Button ID="btnConvert" Text="Convert" OnClick="btnConvert_Click" runat="server" />
+		<asp:TextBox ID="txtRecipe" TextMode="MultiLine" placeholder="paste your recipe here" runat="server" />
+		<asp:Button ID="btnConvert" Text="Convert" OnClick="btnConvert_Click" CssClass="pure-button" runat="server" />
 	</form>
 </body>
 </html>
