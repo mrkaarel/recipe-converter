@@ -11,11 +11,19 @@
 			width: 100%; height: 100%;
 		}
 		textarea {
-			border: 0;
 			width: 99vw;
 			height: 99vh;
 
 			padding: 1em;
+
+			border: none;
+			overflow: auto;
+			outline: none;
+			resize: none;
+
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			box-shadow: none;
 		}
 		input[type=submit] {
 			position: absolute;
@@ -27,7 +35,7 @@
 </head>
 <body>
 	<form id="form1" runat="server">
-		<asp:TextBox ID="txtRecipe" TextMode="MultiLine" runat="server" />
+		<asp:TextBox ID="txtRecipe" TextMode="MultiLine" placeholder="paste your recipe here and press Convert" runat="server" />
 		<asp:Button ID="btnConvert" Text="Convert" OnClick="btnConvert_Click" runat="server" />
 	</form>
 </body>
