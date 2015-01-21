@@ -18,6 +18,7 @@
 			margin-top: -60px;
 		}
 	</style>
+	<meta name="viewport" content="width=device-width" />
 </head>
 <body>
 	<form id="form1" runat="server">
