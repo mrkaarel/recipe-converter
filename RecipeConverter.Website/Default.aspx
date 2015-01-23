@@ -3,8 +3,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<meta name="description" content="A simple tool to convert imperial units in your recipe to metric ones." />
 	<title>Recipe converter</title>
+	
+	<meta name="description" content="A simple tool to convert imperial units in your recipe to metric ones." />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="icon" type="image/png" href="favicon.png" />
 	<style>
 		* { 
 			box-sizing: border-box; 
@@ -49,7 +52,6 @@
 				background-color: rgba(66, 133, 244, 0.9);
 			}
 	</style>
-	<meta name="viewport" content="width=device-width" />
 </head>
 <body>
 	<form runat="server">
