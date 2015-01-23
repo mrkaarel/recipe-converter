@@ -26,7 +26,7 @@ namespace RecipeConverter.Model
 		{
 			string sourceUnits = String.Join("|", RuleSet.Select(r => r.SourceUnit));
 
-			return Regex.Replace(input, @"(\d{1,3}(?:\.\d{1,3})?) ?(" + sourceUnits + @")\.?", ConvertUnits);
+			return Regex.Replace(input, @"(\d{1,3}(?:\.\d{1,3})?) ?(" + sourceUnits + @")", ConvertUnits);
 		}
 
 		public string ConvertFractions(string input)
@@ -34,7 +34,7 @@ namespace RecipeConverter.Model
 			string result = input;
 			string sourceUnits = String.Join("|", RuleSet.Select(r => r.SourceUnit));
 
-			result = Regex.Replace(result, @"(\d{1,5} +)?(¼|½|¾)(?= ?(" + sourceUnits + @"))", ConvertUnicodeVulgarFractionToAscii);
+			result = Regex.Replace(result, @"(\d{1,5})?(¼|½|¾)(?= ?(" + sourceUnits + @"))", ConvertUnicodeVulgarFractionToAscii);
 			result = Regex.Replace(result, @"((?:\d{1,5} +)?\d/\d)(?= ?(" + sourceUnits + @"))", ConvertAsciiVulgarFractionToDecimal);
 
 			return result;
@@ -42,7 +42,9 @@ namespace RecipeConverter.Model
 
 		private static string ConvertUnicodeVulgarFractionToAscii(Match m)
 		{
+			string wholePart = m.Groups[1].Value;
 			string fraction = m.Groups[2].Value;
+
 			switch (fraction) {
 				case "¼":
 					fraction = "1/4";
@@ -57,16 +59,7 @@ namespace RecipeConverter.Model
 					break;
 			}
 
-			string result;
-			string wholePart = m.Groups[1].Value;
-			if (!String.IsNullOrWhiteSpace(wholePart)) {
-				result = String.Format("{0} {1}", wholePart, fraction);
-			}
-			else {
-				result = fraction;
-			}
-
-			return result;
+			return !String.IsNullOrWhiteSpace(wholePart) ? String.Format("{0} {1}", wholePart, fraction) : fraction;
 		}
 
 		private static string ConvertAsciiVulgarFractionToDecimal(Match m)
