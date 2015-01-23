@@ -11,7 +11,7 @@ namespace RecipeConverter
 {
 	public partial class Default : System.Web.UI.Page
 	{
-		private List<Unit> units;
+		private List<ConversionRule> rules;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -34,20 +34,20 @@ namespace RecipeConverter
 
 		public string ConvertUnits(Match m)
 		{
-			var unit = units.First(u => u.SourceUnit.Contains(m.Groups[2].Value));
+			var rule = rules.First(u => u.SourceUnit.Contains(m.Groups[2].Value));
 			decimal amount = Decimal.Parse(m.Groups[1].Value, CultureInfo.InvariantCulture);
 
-			return String.Format("{0:" + unit.TargetFormatString + "} {1}", amount * unit.Factor, unit.TargetUnit);
+			return String.Format("{0:" + rule.TargetFormatString + "} {1}", amount * rule.Factor, rule.TargetUnit);
 		}
 
-		public class Unit
+		public class ConversionRule
 		{
 			public string SourceUnit { get; set; }
 			public string TargetUnit { get; set; }
 			public string TargetFormatString { get; set; }
 			public decimal Factor { get; set; }
 
-			public Unit()
+			public ConversionRule()
 			{
 				TargetFormatString = "0.##";
 			}
@@ -57,13 +57,13 @@ namespace RecipeConverter
 		{
 			string input = txtRecipe.Text;
 
-			units = new List<Unit>();
-			units.Add(new Unit() { SourceUnit = "pounds|pound|lbs|lb", TargetUnit = "kg", Factor = 0.453592m });
-			units.Add(new Unit() { SourceUnit = "ounces|ounce|oz", TargetUnit = "g", Factor = 28.3495m, TargetFormatString = "#" });
-			units.Add(new Unit() { SourceUnit = "cups|cup", TargetUnit = "ml", Factor = 236.588m, TargetFormatString = "#" });
+			rules = new List<ConversionRule>();
+			rules.Add(new ConversionRule() { SourceUnit = "pounds|pound|lbs|lb", TargetUnit = "kg", Factor = 0.453592m });
+			rules.Add(new ConversionRule() { SourceUnit = "ounces|ounce|oz", TargetUnit = "g", Factor = 28.3495m, TargetFormatString = "#" });
+			rules.Add(new ConversionRule() { SourceUnit = "cups|cup", TargetUnit = "ml", Factor = 236.588m, TargetFormatString = "#" });
 
 			string result = input;
-			string sourceUnits = String.Join("|", units.Select(u => u.SourceUnit));
+			string sourceUnits = String.Join("|", rules.Select(r => r.SourceUnit));
 			result = Regex.Replace(result, @"((?:\d{1,5} )?\d/\d)(?= ?(" + sourceUnits + "))", ConvertFractions);
 			result = Regex.Replace(result, @"(\d{1,3}(?:\.\d{1,3})?) ?(" + sourceUnits + @")\.?", ConvertUnits);
 
