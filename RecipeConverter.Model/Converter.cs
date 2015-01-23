@@ -88,7 +88,7 @@ namespace RecipeConverter.Model
 			var rule = RuleSet.First(r => r.SourceUnit.Contains(m.Groups[2].Value));
 			decimal amount = Decimal.Parse(m.Groups[1].Value, CultureInfo.InvariantCulture);
 
-			return String.Format("{0:" + rule.TargetFormatString + "} {1}", amount * rule.Factor, rule.TargetUnit);
+			return String.Format("{0:" + rule.TargetFormatString + "} {1}", rule.ConversionMethod(amount), rule.TargetUnit);
 		}
     }
 }
