@@ -26,7 +26,7 @@ namespace RecipeConverter.Model
 		{
 			string sourceUnits = String.Join("|", RuleSet.Select(r => r.SourceUnit));
 
-			return Regex.Replace(input, @"(\d{1,3}(?:\.\d{1,3})?) ?(" + sourceUnits + @")", ConvertUnits);
+			return Regex.Replace(input, @"(?<Amount>\d{1,3}(?:\.\d{1,3})?) ?(?<Unit>" + sourceUnits + @")", ConvertUnits);
 		}
 
 		public string ConvertFractions(string input)
@@ -78,9 +78,12 @@ namespace RecipeConverter.Model
 
 		private string ConvertUnits(Match m)
 		{
-			var rule = RuleSet.First(r => r.SourceUnit.Contains(m.Groups[2].Value));
-			decimal amount = Decimal.Parse(m.Groups[1].Value, CultureInfo.InvariantCulture);
+			var rule = RuleSet.FirstOrDefault(r => r.IsMatchApplicable(m));
+			if (rule == null) {
+				return m.Value;
+			}
 
+			decimal amount = Decimal.Parse(m.Groups["Amount"].Value, CultureInfo.InvariantCulture);
 			return String.Format("{0:" + rule.TargetFormatString + "} {1}", rule.ConversionMethod(amount), rule.TargetUnit);
 		}
     }
