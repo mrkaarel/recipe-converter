@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using System.Linq;
+using System;
 
 namespace RecipeConverter.Model
 {
@@ -28,7 +29,7 @@ namespace RecipeConverter.Model
 		}
 	}
 
-	public static class FormatStrings
+	public static class AmountFormatStrings
 	{
 		public const string Integer = "#";
 		public const string OneDecimalPlace = "0.#";
@@ -39,9 +40,10 @@ namespace RecipeConverter.Model
 	{
 		public string SourceUnit { get; set; }
 		public string TargetUnit { get; set; }
-		public string TargetFormatString { get; set; }
 		public ConversionMethods.ConversionMethod ConversionMethod { get; set; }
 		public ApplicabilityEvaluators.ApplicabilityEvaluator ApplicabilityEvaluator { get; set; }
+		
+		public string AmountFormatString { get; set; }
 
 		public bool IsMatchApplicable(Match m)
 		{
@@ -53,22 +55,22 @@ namespace RecipeConverter.Model
 
 		}
 
-		public ConversionRule(string sourceUnit, string targetUnit, decimal conversionFactor, string formatString = FormatStrings.TwoDecimalPlaces) 
+		public ConversionRule(string sourceUnit, string targetUnit, decimal conversionFactor, string formatString = AmountFormatStrings.TwoDecimalPlaces) 
 			: this(sourceUnit, targetUnit, ConversionMethods.Factor(conversionFactor), formatString)
 		{}
 
-		public ConversionRule(string sourceUnit, string targetUnit, ConversionMethods.ConversionMethod conversionMethod, string formatString = FormatStrings.TwoDecimalPlaces)
+		public ConversionRule(string sourceUnit, string targetUnit, ConversionMethods.ConversionMethod conversionMethod, string formatString = AmountFormatStrings.TwoDecimalPlaces)
 			: this(sourceUnit, targetUnit, conversionMethod, ApplicabilityEvaluators.JustUnitMatch(), formatString)
 		{}
 
-		public ConversionRule(string sourceUnit, string targetUnit, ConversionMethods.ConversionMethod conversionMethod, ApplicabilityEvaluators.ApplicabilityEvaluator evaluator, string formatString = FormatStrings.TwoDecimalPlaces)
+		public ConversionRule(string sourceUnit, string targetUnit, ConversionMethods.ConversionMethod conversionMethod, ApplicabilityEvaluators.ApplicabilityEvaluator evaluator, string formatString = AmountFormatStrings.TwoDecimalPlaces)
 			: this()
 		{
 			this.SourceUnit = sourceUnit;
 			this.TargetUnit = targetUnit;
 			this.ConversionMethod = conversionMethod;
 			this.ApplicabilityEvaluator = evaluator;
-			this.TargetFormatString = formatString;
+			this.AmountFormatString = formatString;
 		}
 	}
 }
