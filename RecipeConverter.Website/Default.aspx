@@ -12,7 +12,7 @@
 </head>
 <body>
 	<form method="post">
-		<textarea ID="txtRecipe" placeholder="paste your recipe here" runat="server" />
+		<textarea ID="txtRecipe" placeholder="paste your recipe here and hit Convert" runat="server" />
 		<input type="submit" value="Convert" />
 	</form>
 </body>
