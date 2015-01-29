@@ -26,7 +26,7 @@ namespace RecipeConverter.Model
 		{
 			string sourceUnits = String.Join("|", RuleSet.Select(r => r.SourceUnit));
 
-			return Regex.Replace(input, @"(?<Amount>\d{1,3}(?:\.\d{1,3})?) ?(?<Unit>" + sourceUnits + @")", ConvertUnits);
+			return Regex.Replace(input, @"(?<Amount>\d{1,3}(?:\.\d{1,3})?)[ -]?(?<Unit>" + sourceUnits + @")", ConvertUnits);
 		}
 
 		public string ConvertFractions(string input)
@@ -34,8 +34,8 @@ namespace RecipeConverter.Model
 			string result = input;
 			string sourceUnits = String.Join("|", RuleSet.Select(r => r.SourceUnit));
 
-			result = Regex.Replace(result, @"(\d{1,5})?(¼|½|¾)(?= ?(" + sourceUnits + @"))", ConvertUnicodeVulgarFractionToAscii);
-			result = Regex.Replace(result, @"((?:\d{1,5} +)?\d/\d)(?= ?(" + sourceUnits + @"))", ConvertAsciiVulgarFractionToDecimal);
+			result = Regex.Replace(result, @"(\d{1,5})?(¼|½|¾)(?=[ -]?(" + sourceUnits + @"))", ConvertUnicodeVulgarFractionToAscii);
+			result = Regex.Replace(result, @"((?:\d{1,5} +)?\d/\d)(?=[ -]?(" + sourceUnits + @"))", ConvertAsciiVulgarFractionToDecimal);
 
 			return result;
 		}
@@ -64,7 +64,7 @@ namespace RecipeConverter.Model
 
 		private static string ConvertAsciiVulgarFractionToDecimal(Match m)
 		{
-			var amountParts = m.Groups[1].Value.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+			var amountParts = m.Groups[1].Value.Split(new char[] {' ', '-'}, StringSplitOptions.RemoveEmptyEntries);
 			decimal resultAmount = 0;
 			if (amountParts.Length > 1) {
 				resultAmount = Int32.Parse(amountParts[0]);

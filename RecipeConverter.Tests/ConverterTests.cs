@@ -66,6 +66,15 @@ namespace RecipeConverter.Tests
 			}
 
 			[TestMethod]
+			public void HyphenBetweenAmountAndUnit_UnitsAreConverted()
+			{
+				string input = "0.5-foo";
+				var converter = new Converter(new List<ConversionRule>() { new ConversionRule("foo", "bar", 3) });
+
+				Assert.AreEqual(String.Format("{0} bar", 1.5m), converter.Convert(input));
+			}
+
+			[TestMethod]
 			public void InputAmountExceedsRuleMinimumAmount_UnitsAreNotConverted()
 			{
 				string input = "1 foo";
