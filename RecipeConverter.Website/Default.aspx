@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<title>Recipe converter</title>
+	<title>Recipe Converter</title>
 	
 	<meta name="description" content="A simple tool to convert imperial units in your recipe to metric ones." />
 	<meta name="viewport" content="width=device-width" />
