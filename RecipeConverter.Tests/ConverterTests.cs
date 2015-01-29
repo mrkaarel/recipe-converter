@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RecipeConverter.Model;
+using System;
 using System.Collections.Generic;
 
 namespace RecipeConverter.Tests
@@ -54,6 +54,33 @@ namespace RecipeConverter.Tests
 				var converter = new Converter(new List<ConversionRule>() { new ConversionRule("foo", "bar", 3) });
 
 				Assert.AreEqual(input, converter.Convert(input));
+			}
+
+			[TestMethod]
+			public void NoSpaceBetweenAmountAndUnit_UnitsAreConverted()
+			{
+				string input = "0.5foo";
+				var converter = new Converter(new List<ConversionRule>() { new ConversionRule("foo", "bar", 3) });
+
+				Assert.AreEqual(String.Format("{0} bar", 1.5m), converter.Convert(input));
+			}
+
+			[TestMethod]
+			public void InputAmountExceedsRuleMinimumAmount_UnitsAreNotConverted()
+			{
+				string input = "1 foo";
+				var converter = new Converter(new List<ConversionRule>() { new ConversionRule("foo", "bar", ConversionMethods.Factor(3), ApplicabilityEvaluators.MinimumAmount(2)) });
+
+				Assert.AreEqual(input, converter.Convert(input));
+			}
+
+			[TestMethod]
+			public void InputAmountIsBelowRuleMinimumAmount_UnitsAreConverted()
+			{
+				string input = "3 foo";
+				var converter = new Converter(new List<ConversionRule>() { new ConversionRule("foo", "bar", ConversionMethods.Factor(3), ApplicabilityEvaluators.MinimumAmount(2)) });
+
+				Assert.AreEqual("9 bar", converter.Convert(input));
 			}
 		}
 
