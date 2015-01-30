@@ -123,6 +123,14 @@ namespace RecipeConverter.Tests
 				Assert.AreEqual("1.5 foo", converter.ConvertFractions(input));
 			}
 
+			[TestMethod]
+			public void AsciiFractionWholePartSeparatedByHyphen_UnitsConvertedToDecimal()
+			{
+				string input = "1-1/2 foo";
+				var converter = new Converter(new List<ConversionRule>() { new ConversionRule("foo", "bar", 3) });
+
+				Assert.AreEqual("1.5 foo", converter.ConvertFractions(input));
+			}
 
 			[TestMethod]
 			public void InputContainsFractionsWithoutApplicableRules_FractionsNotConverted()

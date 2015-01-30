@@ -35,7 +35,7 @@ namespace RecipeConverter.Model
 			string sourceUnits = String.Join("|", RuleSet.Select(r => r.SourceUnit));
 
 			result = Regex.Replace(result, @"(\d{1,5})?(¼|½|¾)(?=[ -]?(" + sourceUnits + @"))", ConvertUnicodeVulgarFractionToAscii);
-			result = Regex.Replace(result, @"((?:\d{1,5} +)?\d/\d)(?=[ -]?(" + sourceUnits + @"))", ConvertAsciiVulgarFractionToDecimal);
+			result = Regex.Replace(result, @"((?:\d{1,5}[ -]+)?\d/\d)(?=[ -]?(" + sourceUnits + @"))", ConvertAsciiVulgarFractionToDecimal);
 
 			return result;
 		}
